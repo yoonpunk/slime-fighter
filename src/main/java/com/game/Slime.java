@@ -6,11 +6,13 @@ public class Slime {
 
     private String name;
     private int hp;
+    private int maxHp;
     private int attack;
 
-    public Slime(String name, int hp, int attack) {
+    public Slime(String name, int hp, int maxHp, int attack) {
         this.name = name;
         this.hp = hp;
+        this.maxHp = maxHp;
         this.attack = attack;
     }
 
@@ -48,5 +50,17 @@ public class Slime {
      */
     public boolean isAlive() {
         return this.hp > 0;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
     }
 }

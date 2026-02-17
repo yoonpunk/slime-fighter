@@ -72,4 +72,20 @@ public class Hero {
             return false;
         }
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public int getPotionCount() {
+        return potionCount;
+    }
 }
