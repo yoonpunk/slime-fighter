@@ -23,7 +23,7 @@ public class Hero {
      * 20% 확률로 2배 크리티컬 공격을 수행한다.
      * @param target
      */
-    public void attack(Slime target) {
+    public int attack(Slime target) {
         // 치명타 여부 계산
         Random random = new Random();
         int chance = random.nextInt(10); // 0~9 까지 중 임의의 한 숫자 반환
@@ -45,6 +45,8 @@ public class Hero {
 
         // 대상 슬라임의 체력을 깎는다.
         target.takeDamage(damage);
+
+        return damage;
     }
 
     /**
@@ -70,6 +72,23 @@ public class Hero {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void drinkPotion() {
+        if (potionCount <= 0) {
+            System.out.println("포션이 없습니다. 회복이 불가능합니다.");
+        } else {
+            this.potionCount--;
+            int currentHp = this.hp + 30;
+
+            if (currentHp > maxHp) {
+                this.hp = maxHp;
+            } else {
+                this.hp = currentHp;
+            }
+
+            System.out.println("포션을 먹고 회복되었습니다. HP: " + this.hp + "포션갯수:" + this.potionCount);
         }
     }
 

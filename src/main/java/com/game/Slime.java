@@ -20,7 +20,7 @@ public class Slime {
      * 슬라임이 대상 용사를 공격한다.
      * @param target
      */
-    public void attack(Hero target) {
+    public int attack(Hero target) {
 
         // 추가 데미지 계산
         Random random = new Random();
@@ -28,6 +28,7 @@ public class Slime {
         int damage = this.attack + additionalAttack;
 
         target.takeDamage(damage);
+        return damage;
     }
 
     /**

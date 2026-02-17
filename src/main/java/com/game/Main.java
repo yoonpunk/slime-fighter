@@ -33,7 +33,19 @@ public class Main {
         slimeList.add(blueSlime);
         slimeList.add(redSlime);
 
-        printStatus(hero, slimeList);
+        // 용사가 죽거나 슬라임이 모두 죽었거나
+        while(true) {
+            printStatus(hero, slimeList);
+            battle(hero, slimeList, scanner);
+
+            if (!hero.isAlive()) {
+                System.out.println("[결과] 용사가 죽었습니다. 마을이 침략당했습니다.");
+                break;
+            } else if (!isAnySlimeAlive(slimeList)) {
+                System.out.println("[결과] 모든 슬라임을 물리쳤습니다! 마을에 평화가 찾아왔습니다.");
+                break;
+            }
+        }
     }
 
     /**
@@ -66,5 +78,63 @@ public class Main {
 //            System.out.println(i+1 + ". " + slimeList.get(i).getName() + " 슬라임 (HP: " + slimeList.get(i).getHp() + "/" + slimeList.get(i).getMaxHp() + ")");
 //            System.out.println(number + ". " + currentSlime.getName() + " 슬라임 (HP: " + currentSlime.getHp() + "/" + currentSlime.getMaxHp() + ")");
 //        }
+    }
+
+    public static void battle(Hero hero, ArrayList<Slime> slimes, Scanner scanner) {
+        System.out.println("[행동 선택] 1.공격  2.회복");
+        System.out.println("[입력]: ");
+        int action = scanner.nextInt();
+
+        // 용사 턴
+        if (action == 1) {
+            // 공격 대상 입력
+            System.out.println("[시스템] 몇 번 슬라임을 공격하시겠습니까?");
+            System.out.printf("[입력]: ");
+            int targetSlimeIndex = scanner.nextInt() - 1;
+
+            // 공격 대상 슬라임 가져오기
+            Slime targetSlime = slimes.get(targetSlimeIndex);
+
+            // 슬라임을 공격
+            int damage = hero.attack(targetSlime);
+            System.out.println("[전투] " + hero.getName() + "의 공격! '" + targetSlime.getName() + " 슬라임'에게 " + damage + "의 데미지를 입혔습니다.");
+
+            // 슬라임 생존여부 확인
+            if (!targetSlime.isAlive()) {
+                System.out.println("[안내] " + targetSlime.getName()+ " 슬라임을 처치했습니다!");
+            }
+        } else if (action == 2) {
+            hero.drinkPotion();
+        } else {
+            throw new IllegalArgumentException("잘못된 숫자를 입력했습니다.");
+        }
+
+        // 슬라임턴
+        System.out.println("[반격] 살아남은 슬라임들의 공격!");
+
+        for (Slime slime : slimes) {
+            if (!slime.isAlive()) {
+                continue;
+            }
+
+            int damage = slime.attack(hero);
+            System.out.println(slime.getName() + " 슬라임이 " + damage + "의 데미지를 입혔습니다.");
+        }
+    }
+
+    public static boolean isAnySlimeAlive(ArrayList<Slime> slimes) {
+        boolean isAnySlimeAlive = false;
+
+        for (Slime slime : slimes) {
+            if (slime.isAlive()) {
+                isAnySlimeAlive = true;
+            }
+
+            if (isAnySlimeAlive) {
+                break;
+            }
+        }
+
+        return isAnySlimeAlive;
     }
 }
