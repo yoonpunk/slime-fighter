@@ -43,9 +43,8 @@ public class Hero {
             damage = this.attack;
         }
 
-        // 슬라임의 체력을 깎는다.
-        // todo 슬라임이 데미지 받는 걸 구현해야 됨.
-//        target.takeDamage(damage);
+        // 대상 슬라임의 체력을 깎는다.
+        target.takeDamage(damage);
     }
 
     /**
